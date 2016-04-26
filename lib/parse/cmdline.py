@@ -127,6 +127,9 @@ def cmdLineParser(argv=None):
         request.add_option("--host", dest="host",
                            help="HTTP Host header value")
 
+        request.add_option("--ip", dest="ip",
+                           help="IP address instead of a DNS lookup")
+
         request.add_option("--referer", dest="referer",
                            help="HTTP Referer header value")
 

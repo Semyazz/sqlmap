@@ -1010,9 +1010,17 @@ def _setDNSCache():
     def _getaddrinfo(*args, **kwargs):
         if args in kb.cache:
             return kb.cache[args]
-
         else:
+            #import ipdb; ipdb.set_trace()        
             kb.cache[args] = socket._getaddrinfo(*args, **kwargs)
+            
+            if conf.ip is not None and args[0] == conf.ip.split(':')[0]:
+                for idx, f in enumerate(kb.cache[args]):
+                    resolved = list(f)
+                    ip = list(resolved[4])
+                    ip[0] = conf.ip.split(':')[1]
+                    resolved[4] = tuple(ip)
+                    kb.cache[args][idx] = tuple(resolved)
             return kb.cache[args]
 
     if not hasattr(socket, "_getaddrinfo"):
